@@ -28,6 +28,10 @@ I tried to show code to work with db (Ecto), elixir structures and recursion, co
 Module for sending emails from application. Works around Bamboo mailer. Added EmailLog to write optionally usage and calculate it per billing periods.
 Smtp and SendGridAPI are adapters supported for now.
 
+
+### Cluster:
+Some tasks executed on cluster or communication between apps.
+
 ### live_view_components
 content_cards to quickly render cards and wrapped into it tabs, it supports mobile devices + left/right/top/bottom positions of tabs (screens are available)
 ### dynamic_layout
