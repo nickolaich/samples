@@ -1,0 +1,113 @@
+<div class="px-0 <%= if @no_paddings == false, do: "md:px-10" %> mx-auto w-full  mt-1
+    <%= if @h_screen == true do %> h-screen <% end %>">
+    <div class="flex flex-wrap">
+        <%= if @show_tabs_nav do %>
+            <%= if @are_vertical_tabs_at_left do  %>
+            <div class="<%= @tabs_content_width %>">
+                <%= live_component @socket, BackOffice.Components.Tabs, @tab_opts %>
+            </div>
+            <% end %>
+            <%= if @are_horizontal_tabs_at_top do  %>
+            <div class="<%= @tabs_content_width %>">
+                <%= live_component @socket, BackOffice.Components.Tabs, @tab_opts %>
+            </div>
+            <% end %>
+        <% end %>
+        <div class="<%= @content_width %> px-0 <%= if @no_paddings == false, do: "md:px-2 lg:px-4" %>">
+
+
+
+<div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0">
+    <div class="rounded-t
+			<%= if !is_nil(assigns[:header_css]), do: assigns[:header_css], else:  "bg-white" %>
+     		mb-0 px-2 md:px-6 <%= if assigns[:small_heading] == true, do: "py-2 md:py-2", else: "py-2 md:py-6" %>">
+
+        <div class="text-left flex">
+
+			<h6 class="flex-1 <%= if !is_nil(assigns[:header_title_css]), do: assigns[:header_title_css], else:  "text-gray-800 text-sm md:text-xl font-bold" %>">
+            	<%= assigns[:card_title] %>
+				<%= if assigns[:pro_icon] do %>
+					<span class=" absolute pl-3 -mt-1 text-yellow-300"><i class="fa fa-fire"></i><span class="pl-1">Pro</span></span>
+				<% end %>
+			</h6>
+
+            <%= if is_list(assigns[:buttons]) do %>
+            <%= live_component @socket, BackOffice.Components.CardButtons, id: UUID.uuid4(),
+                            buttons: assigns[:buttons]
+                                %>
+                        <% end %>
+            <%= if @show_tabs_nav do %>
+				<div x-data="{ open: false }">
+					<button
+							x-on:click="open = !open"
+							class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+							type="button"
+					>
+						<i class="fas fa-bars"></i></button>
+					<div :class="{'': open, 'hidden': !open }"
+						 class="md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded bg-white m-2 py-3 px-6">
+						<div class="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-gray-300">
+							<div class="flex flex-wrap">
+								<div class="w-6/12">
+									<a class="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
+									   href="javascript:void(0)">
+										<%= assigns[:card_title] %>
+									</a>
+								</div>
+								<div class="w-6/12 flex justify-end">
+									<button
+											x-on:click="open = !open"
+											type="button"
+											class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent">
+										<i class="fas fa-times"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<%= live_component @socket, BackOffice.Components.Tabs, @mobile_tab_opts %>
+						<ul class="md:flex-col md:min-w-full flex flex-col list-none">
+							<li class="items-center">
+								<a x-on:click="open = !open" href="javascript:;"
+								   class="active-sidebar-link text-xs uppercase py-3 font-bold block" href="/">
+									<i class="fas fa-times-circle opacity-75 mr-2 text-sm"></i>
+									<%= dgettext("global", "close") %>
+
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+            <% end %>
+        </div>
+    </div>
+    <div class="flex-auto px-4 lg:px-10 py-10 pt-0 <%= assigns[:content_css] %>">
+        <%= if assigns[:template] do %>
+        <%= render assigns[:template], assigns %>
+            <% end %>
+        <%= if assigns[:modules] do %>
+        <%= live_component @socket, assigns[:modules], assigns[:module_params] || [] %>
+            <% end %>
+        <%= if @has_tabs and @current_tab_component_to_render do %>
+        <%= live_component @socket, @current_tab_component_to_render, @current_tab_component_params_to_render %>
+            <% end %>
+        <%= if assigns[:inner] == true and !is_nil(assigns[:inner_block]) do %>
+        <%= render_block(@inner_block, []) %>
+            <% end %>
+
+    </div>
+</div>
+
+
+
+
+        </div>
+        <%= if @show_tabs_nav do %>
+            <%= if @are_vertical_tabs_at_right do  %>
+                <div class="<%= @tabs_content_width %>">
+                    <%= live_component @socket, BackOffice.Components.Tabs, @tab_opts %>
+                </div>
+            <% end %>
+        <% end %>
+
+    </div>
+</div>

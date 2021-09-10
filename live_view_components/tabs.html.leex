@@ -1,0 +1,15 @@
+<nav class="
+    <%= if assigns[:mobile] == true do %> <%else %>hidden lg:flex<% end %>
+ tab tab-<%= @type %> <%= if @type == :horizontal, do: "ml-4 mr-4" %> tab-md">
+    <%= for t <- @tabs do %>
+    <%= if t[:allowed] == true do %>
+    <%= if !is_nil(t[:external_url]) do %>
+    <a class="tab-link" href="<%= t[:external_url] %>" _target="blank"><%= t[:label] %></a>
+    <% else %>
+    <a class="tab-link <%= if @state[:current_tab] == t[:key], do: "active" %>" href="javascript:;"
+       phx-click="<%= t[:event] || "change-tab" %>" phx-value-tab="<%=  t[:key] %>" <%= if t[:target] do %> phx-target="<%= t[:target] %>" <% end %>
+    ><%= t[:label] %></a>
+    <% end %>
+        <% end %>
+    <% end %>
+</nav>
